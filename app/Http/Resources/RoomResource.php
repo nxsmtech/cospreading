@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RiskLevelResource extends JsonResource
+class RoomResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,8 +15,8 @@ class RiskLevelResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'level' => $this->level,
-            'timestamp' => $this->updated_at,
+            'name' => $this->name,
+            'risk' => new RiskLevelResource($this->riskLevel),
         ];
     }
 }

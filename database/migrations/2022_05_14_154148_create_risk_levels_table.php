@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('risk_levels', function (Blueprint $table) {
             $table->id();
             $table->string('level');
-            $table->integer('room');
+            $table->integer('room_id');
             $table->timestamps();
         });
     }

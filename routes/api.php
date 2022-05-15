@@ -1,7 +1,6 @@
 <?php
 
-
-use App\Http\Controllers\Api\RiskApiController;
+use App\Http\Controllers\Api\RoomController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,4 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/risk', [RiskApiController::class, 'currentRiskLevel']);
+Route::get('rooms', [RoomController::class, 'allRoomRiskLevel']);
+Route::get('rooms/{room}/risk', [RoomController::class, 'roomRiskLevel']);

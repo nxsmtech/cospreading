@@ -20,7 +20,7 @@ class RiskLevelFactory extends Factory
     {
         return [
             'level' => $this->faker->randomElement(RiskLevel::RISK_LEVELS)->level(),
-            'room' => Room::factory(),
+            'room_id' => Room::factory(),
         ];
     }
 }
