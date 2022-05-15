@@ -16,6 +16,7 @@ class RoomResource extends JsonResource
     {
         return [
             'name' => $this->name,
+            'code' => $this->code,
             'risk' => new RiskLevelResource($this->riskLevel),
         ];
     }
