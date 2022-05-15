@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Enums\RiskLevel;
 use App\Models\Room;
+use App\Services\RiskLevelService;
 use Illuminate\Console\Command;
 
 class UpdateRoomRiskLevel extends Command
@@ -50,8 +51,9 @@ class UpdateRoomRiskLevel extends Command
 
     private function updateRoomRiskLevel(Room $room): void
     {
+        //TODO add risk level to room risk level log table
         $riskLevel = $room->riskLevel;
-        $riskLevel->level = 'Critical';
+        $riskLevel->level = app(RiskLevelService::class)->getRoomRiskLevel($room);
         $riskLevel->save();
     }
 
