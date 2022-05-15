@@ -28,4 +28,15 @@ enum RiskLevel
             self::CRITICAL => 'Critical',
         };
     }
+
+    public function riskRating(): int
+    {
+        return match ($this) {
+            self::NO_RISK => 1,
+            self::LOW => 2,
+            self::MEDIUM => 3,
+            self::HIGH => 4,
+            self::CRITICAL => 5,
+        };
+    }
 }

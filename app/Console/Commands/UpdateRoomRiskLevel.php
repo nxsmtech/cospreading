@@ -37,7 +37,7 @@ class UpdateRoomRiskLevel extends Command
             foreach($rooms as $room) {
                 $this->info('Updating risk level in the room: ' . $room->name);
 
-                $this->updateRoomRiskLevel($room);
+                app(RiskLevelService::class)->updateRoomRiskLevel($room);
 
                 $this->info('Room '
                     . $room->name
@@ -47,14 +47,6 @@ class UpdateRoomRiskLevel extends Command
                 $this->info('----');
             }
         });
-    }
-
-    private function updateRoomRiskLevel(Room $room): void
-    {
-        //TODO add risk level to room risk level log table
-        $riskLevel = $room->riskLevel;
-        $riskLevel->level = app(RiskLevelService::class)->getRoomRiskLevel($room);
-        $riskLevel->save();
     }
 
     private function formatRiskLevelOutput(string $riskLevel): string
