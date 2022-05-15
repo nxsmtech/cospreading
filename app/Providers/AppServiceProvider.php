@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\DataProviders\Contracts\ProvidesSensorData;
+use App\DataProviders\Mockoon\MockoonSensorDataProvider;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,9 +13,9 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
-        //
+       $this->app->bind(ProvidesSensorData::class, MockoonSensorDataProvider::class);
     }
 
     /**
@@ -21,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         //
     }
