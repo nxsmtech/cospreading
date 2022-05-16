@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\RiskLevel;
 use App\Enums\RiskLevel as RiskLevelEnum;
+use App\Models\RiskLevelLog;
 use App\Models\Room;
 use App\Repository\RoomSensorDataRepository;
 use App\Resources\Sensors\CarbonDioxideSensor;
@@ -29,11 +30,15 @@ class RiskLevelService
         $currentSensorRiskMeasurements = $this->calculateRiskLevel($sensorInformationData);
         $overallRiskRating = $this->calculateOverallRiskRating($currentSensorRiskMeasurements);
 
-        return $this->updateRiskLevel(
+        $riskLevel = $this->updateRiskLevel(
             $room,
             $overallRiskRating,
             $this->transformRiskRatingToRiskLevel($currentSensorRiskMeasurements)
         );
+
+        $this->logRiskLevel($riskLevel);
+
+        return $riskLevel;
     }
 
     private function calculateRiskLevel(array $sensorData): array
@@ -49,7 +54,6 @@ class RiskLevelService
 
     private function updateRiskLevel(Room $room, int $currentRiskRating, array $sensorMeasurements): RiskLevel
     {
-        //TODO add risk level logging
         return RiskLevel::updateOrCreate(
             ['room_id' => $room->id],
             [
@@ -57,6 +61,16 @@ class RiskLevelService
                 'measurements' => $sensorMeasurements,
             ],
         );
+    }
+
+    private function logRiskLevel(RiskLevel $riskLevel): void
+    {
+        //TODO change logging to PSR standard
+        RiskLevelLog::create([
+            'level' => $riskLevel->level,
+            'room_id' => $riskLevel->room_id,
+            'measurements' => json_encode($riskLevel->measurements),
+        ]);
     }
 
     private function calculateOverallRiskRating(array $sensorDataMeasurementRisks): int
