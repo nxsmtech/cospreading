@@ -9,6 +9,20 @@ return [
         ],
     ],
     'limits' => [
+        'attendees' => [
+            0 => RiskLevel::NO_RISK->riskRating(),
+            10 => RiskLevel::NO_RISK->riskRating(),
+            20 => RiskLevel::NO_RISK->riskRating(),
+            30 => RiskLevel::NO_RISK->riskRating(),
+            40 => RiskLevel::LOW->riskRating(),
+            50 => RiskLevel::LOW->riskRating(),
+            60 => RiskLevel::MEDIUM->riskRating(),
+            70 => RiskLevel::MEDIUM->riskRating(),
+            80 => RiskLevel::HIGH->riskRating(),
+            90 => RiskLevel::HIGH->riskRating(),
+            100 => RiskLevel::CRITICAL->riskRating(),
+            110 => RiskLevel::CRITICAL->riskRating(),
+        ],
         'carbonDioxide' => [
             0 => RiskLevel::NO_RISK->riskRating(),
             350 => RiskLevel::LOW->riskRating(),

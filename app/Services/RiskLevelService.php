@@ -9,12 +9,14 @@ use App\Models\Room;
 use App\Repository\RoomSensorDataRepository;
 use App\Resources\Sensors\CarbonDioxideSensor;
 use App\Resources\Sensors\HumiditySensor;
+use App\Resources\Sensors\RegisterSystemSensor;
 
 class RiskLevelService
 {
     private const RISK_CALCULATION_TYPES = [
         CarbonDioxideSensor::class => CarbonDioxideRiskCalculationService::class,
         HumiditySensor::class => HumidityRiskCalculationService::class,
+        RegisterSystemSensor::class => RegisterSystemRiskCalculationService::class,
     ];
 
     private RoomSensorDataRepository $roomSensorDataRepository;

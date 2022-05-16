@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\RoomEventResourceCollection;
 use App\Http\Resources\RoomResource;
 use App\Http\Resources\RoomResourceCollection;
 use App\Models\Room;
@@ -18,5 +19,10 @@ class RoomController extends Controller
     public function roomRiskLevel(Room $room): RoomResource
     {
         return new RoomResource($room);
+    }
+
+    public function roomEvents(Room $room): RoomEventResourceCollection
+    {
+        return new RoomEventResourceCollection($room->events);
     }
 }

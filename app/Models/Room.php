@@ -14,6 +14,7 @@ class Room extends Model
 
     protected $fillable = [
         'name',
+        'allowed_attendee_count',
     ];
 
     protected static function newFactory(): RoomFactory
@@ -24,5 +25,10 @@ class Room extends Model
     public function riskLevel(): HasOne
     {
         return $this->hasOne(RiskLevel::class);
+    }
+
+    public function events(): HasMany
+    {
+        return $this->hasMany(Event::class);
     }
 }

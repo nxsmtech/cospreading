@@ -2,7 +2,7 @@
 
 namespace App\Resources\Sensors;
 
-class CarbonDioxideSensor extends Sensor
+class RegisterSystemSensor extends Sensor
 {
 
 }

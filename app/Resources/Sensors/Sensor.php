@@ -48,6 +48,4 @@ abstract class Sensor
     {
         return $this->measurements;
     }
-
-    abstract public function calculateRiskLevel(): int;
 }

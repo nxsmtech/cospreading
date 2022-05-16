@@ -19,6 +19,7 @@ class RoomFactory extends Factory
         return [
             'name' => $this->faker->streetName(),
             'code' => $this->faker->randomNumber(5),
+            'allowed_attendee_count' => $this->faker->randomNumber(2),
         ];
     }
 }
