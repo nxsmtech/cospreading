@@ -6,5 +6,5 @@ use App\Resources\Sensors\Sensor;
 
 interface CalculatesRiskLevel
 {
-    public function calculateRiskLevel(Sensor $sensor): int;
+    public function calculateRiskLevel(Sensor $sensor): array;
 }

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('risk_levels', function (Blueprint $table) {
+        Schema::create('risk_level_logs', function (Blueprint $table) {
             $table->id();
             $table->string('level');
             $table->integer('room_id');
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('risk_levels');
+        Schema::dropIfExists('risk_level_logs');
     }
 };
