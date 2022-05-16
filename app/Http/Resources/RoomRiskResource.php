@@ -3,8 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Routing\Events\RouteMatched;
 
-class RoomResource extends JsonResource
+class RoomRiskResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,9 +16,8 @@ class RoomResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'code' => $this->code,
+            'room' => new RoomResource($this),
+            'risk' => new RiskLevelResource($this->riskLevel),
         ];
     }
 }

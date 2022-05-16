@@ -2,12 +2,12 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class RoomResource extends JsonResource
+class RoomRiskResourceCollection extends ResourceCollection
 {
     /**
-     * Transform the resource into an array.
+     * Transform the resource collection into an array.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
@@ -15,9 +15,7 @@ class RoomResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'code' => $this->code,
+            'rooms' => RoomRiskResource::collection($this->collection),
         ];
     }
 }

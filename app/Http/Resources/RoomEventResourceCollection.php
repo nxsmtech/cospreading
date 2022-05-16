@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class RoomResourceCollection extends ResourceCollection
+class RoomEventResourceCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -15,7 +15,7 @@ class RoomResourceCollection extends ResourceCollection
     public function toArray($request): array
     {
         return [
-            'rooms' => RoomResource::collection($this->collection),
+            'event' => RoomEventResource::collection($this->collection),
         ];
     }
 }

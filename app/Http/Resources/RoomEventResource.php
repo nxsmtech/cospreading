@@ -2,9 +2,10 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Room;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RoomResource extends JsonResource
+class RoomEventResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,7 +18,10 @@ class RoomResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'code' => $this->code,
+            'room' => Room::find($this->room_id)->code,
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
+            'attendee_count' => $this->attendee_count,
         ];
     }
 }
