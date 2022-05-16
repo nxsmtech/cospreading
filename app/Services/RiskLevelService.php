@@ -26,11 +26,17 @@ class RiskLevelService
     public function updateRoomRiskLevel(Room $room): RiskLevel
     {
         $sensorInformationData = $this->roomSensorDataRepository->getRoomSensorData($room->code);
-        $currentRiskRating = $this->calculateRiskLevel($sensorInformationData);
-        return $this->updateRiskLevel($room, $currentRiskRating);
+        $currentSensorRiskMeasurements = $this->calculateRiskLevel($sensorInformationData);
+        $overallRiskRating = $this->calculateOverallRiskRating($currentSensorRiskMeasurements);
+
+        return $this->updateRiskLevel(
+            $room,
+            $overallRiskRating,
+            $this->transformRiskRatingToRiskLevel($currentSensorRiskMeasurements)
+        );
     }
 
-    private function calculateRiskLevel(array $sensorData): int
+    private function calculateRiskLevel(array $sensorData): array
     {
         $sensorDataRiskArray = [];
         foreach ($sensorData as $sensor) {
@@ -38,15 +44,38 @@ class RiskLevelService
             $sensorDataRiskArray[] = app($dataCalculationServiceClass)->calculateRiskLevel($sensor);
         }
 
-        return max($sensorDataRiskArray);
+        return $sensorDataRiskArray;
     }
 
-    private function updateRiskLevel(Room $room, int $currentRiskRating): RiskLevel
+    private function updateRiskLevel(Room $room, int $currentRiskRating, array $sensorMeasurements): RiskLevel
     {
         //TODO add risk level logging
         return RiskLevel::updateOrCreate(
             ['room_id' => $room->id],
-            ['level' => RiskLevelEnum::RISK_LEVELS[$currentRiskRating]->level()],
+            [
+                'level' => RiskLevelEnum::RISK_LEVELS[$currentRiskRating]->level(),
+                'measurements' => $sensorMeasurements,
+            ],
         );
+    }
+
+    private function calculateOverallRiskRating(array $sensorDataMeasurementRisks): int
+    {
+        $sensorDataMeasurementRiskGrades = [];
+        foreach ($sensorDataMeasurementRisks as $sensorDataMeasurementRisk) {
+            $sensorDataMeasurementRiskGrades[] = $sensorDataMeasurementRisk['riskLevel'];
+        }
+
+        return max($sensorDataMeasurementRiskGrades);
+    }
+
+    private function transformRiskRatingToRiskLevel(array $sensorDataMeasurementRisks): array
+    {
+        foreach ($sensorDataMeasurementRisks as &$sensorDataMeasurementRisk) {
+            $sensorDataMeasurementRisk['riskLevel'] =
+                RiskLevelEnum::RISK_LEVELS[$sensorDataMeasurementRisk['riskLevel']]->level();
+        }
+
+        return $sensorDataMeasurementRisks;
     }
 }

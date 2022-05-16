@@ -3,11 +3,13 @@
 namespace App\Services;
 
 use App\Enums\RiskLevel;
+use App\Enums\SensorType;
+use App\Resources\Sensors\HumiditySensor;
 use App\Resources\Sensors\Sensor;
 
 class HumidityRiskCalculationService implements CalculatesRiskLevel
 {
-    public function calculateRiskLevel(Sensor $sensor): int
+    public function calculateRiskLevel(Sensor $sensor): array
     {
         $sensorMeasurements = $sensor->getMeasurements();
         $humidityMeasurement = $sensorMeasurements[0]->humidity;
@@ -16,7 +18,11 @@ class HumidityRiskCalculationService implements CalculatesRiskLevel
         $humidityGradesByTemperature =
             $this->getHumidityTemperatureGradesByHumidityMeasurementLevel($humidityMeasurement);
 
-        return $this->getHumidityGradeByTemperature($temperatureMeasurement, $humidityGradesByTemperature);
+        return [
+            'type' => SensorType::HUMIDITY,
+            'riskLevel' => $this->getHumidityGradeByTemperature($temperatureMeasurement, $humidityGradesByTemperature),
+            'measurements' => $sensorMeasurements,
+        ];
     }
 
     private function getHumidityTemperatureGradesByHumidityMeasurementLevel(int $humidityMeasurement): array
@@ -34,7 +40,7 @@ class HumidityRiskCalculationService implements CalculatesRiskLevel
         return $temperatureHumidityGrades['temperature'];
     }
 
-    private function getHumidityGradeByTemperature(int $temperatureMeasurement, array $humidityTemperatureGrades)
+    private function getHumidityGradeByTemperature(int $temperatureMeasurement, array $humidityTemperatureGrades): int
     {
         if ($temperatureMeasurement < array_key_first($humidityTemperatureGrades)) {
             return RiskLevel::CRITICAL->riskRating();

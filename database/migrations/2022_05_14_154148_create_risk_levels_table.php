@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('level');
             $table->integer('room_id');
+            $table->json('measurements')->nullable();
             $table->timestamps();
         });
     }

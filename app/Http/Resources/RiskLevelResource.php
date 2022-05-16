@@ -17,6 +17,7 @@ class RiskLevelResource extends JsonResource
         return [
             'level' => $this->level,
             'timestamp' => $this->updated_at,
+            'measurements' => json_decode($this->measurements),
         ];
     }
 }

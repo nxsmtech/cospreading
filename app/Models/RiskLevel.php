@@ -14,6 +14,7 @@ class RiskLevel extends Model
     protected $fillable = [
         'level',
         'room_id',
+        'measurements',
     ];
 
     protected static function newFactory(): RiskLevelFactory
