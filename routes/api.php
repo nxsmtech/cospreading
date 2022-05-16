@@ -22,3 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('rooms', [RoomController::class, 'allRoomRiskLevel']);
 Route::get('rooms/{room}/risk', [RoomController::class, 'roomRiskLevel']);
 Route::get('rooms/{room}/events', [RoomController::class, 'roomEvents']);
+Route::get('rooms/{room}/events/{event}/risk', [RoomController::class, 'roomEventRiskLevel']);
